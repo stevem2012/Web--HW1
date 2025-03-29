@@ -85,13 +85,87 @@
     }
 ```
 در این تابع با استفاده از ویژگی `evaluator` که در آن فرمول متناظر با هر تگ `formula` را نوشته‌ایم را ذخیره میکنیم و سپس به سراغ محاسبه فرمول با استفاده از تابع `calculateExpression` میرویم.
+```javascript
+    calculateExpression(expression) {
+        const vars = Object.keys(this.inputs);
+        const values = vars.map(varName => this.inputs[varName]);
+        const func = new Function(...vars, `return ${expression};`);
+        return func(...values);
+    }
+```
+در نهایت در این بخش ابتدا `key` متناظر با هر ورودی را میگیریم و سپس مقادیر متناظر را نیز ذخیره میکنیم و سپس شی `func` را ایجاد میکنیم و فرمول خواسته شده را نیز در آن ذخیره میکنیم و در نهایت آن را با استفاده از جایگذاری مقادیر داده‌شده محاسبه میکنیم.
 
+```javascript
+    updateAllFormulas() {
+        this.formulaElements.forEach(formula => this.evaluateFormula(formula));
+    }
+```
+این تابع نیز برای این است که اگر یک ورودی تغییر کرد، هر فرمولی دوباره محاسبه شود.
 
 
 ### استایل‌دهی با `CSS`
-برای استایل‌دهی از `CSS` استفاده کرده‌ام. تمام استایل‌های موردنیاز در این فایل نوشته شده‌اند. با استفاده از ویژگی‌هایی مانند `text-align: center`، محتوای صفحه را تنظیم کرده‌ام.
-
-همچنین، برای نمایش ورودی‌ها به‌صورت ستونی و ریسپانسیو بودن صفحه اقداماتی انجام داده‌ام.
-
-در بخش دیگری از فایل، رنگ متن، رنگ پس‌زمینه، فاصله از مرزها و سایر ویژگی‌های ظاهری را مشخص کرده‌ام.
-
+در مورد فایل `css` نیز در ادامه توضیحاتی میدهیم:
+همانطور که میدانیم `css` کلا برای استایل‌دهی به صفحات وب استفاده میشود و تمام استایل‌ها را در آن نوشتم. با استفاده از این فایل من نحوه قرارگیری نوشته‌ها در وسط صفحه `(text-align: center)` و یا قرار دادن عکس پس زمینه با استفاده از این قسمت: 
+```css
+body {
+  background-image: url('sample.png');
+  background-size: cover;      
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+```
+همچنین ستونی قرارگرفتن فیلدها در این قسمت با استقاده از `  ;display: flex; flex-direction: column`:
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  background-color: rgba(85, 85, 85, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+```
+و همچنین ریسپانسیو بودن آن که در این قسمت آن را انجام داده‌ایم: 
+```css
+@media (max-width: 600px) {
+  .container {
+      width: 95%;
+      padding: 15px;
+  }
+  
+  input, formula {
+      width: 90%;
+  }
+  
+  .footer-content {
+      flex-direction: column;
+      gap: 10px;
+  }
+}
+```
+همچنین با استفاده از این فایل من رنگ پس‌زمینه و یا رنگ نوشته و یا فاصله از مرز و یا فیلدهای اطراف را مشخص کرده‌ام: 
+```css
+formula {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  background-color: #e9f7ef;
+  border: 2px solid #28a745;
+  color: #155724;
+  font-weight: bold;
+  border-radius: 4px;
+}
+```
