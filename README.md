@@ -33,24 +33,60 @@
     </footer>
 </body>
 </html>
+```
 
-
-
-در تگ `<head>` مشخصات صفحه مانند عنوان، استانداردهای مورد استفاده، و فایل‌های `CSS` اضافه شده‌اند.
-
-در قسمت `<body>` محتوای اصلی صفحه را تعیین کرده‌ام. قسمت‌هایی که داده در آن وارد می‌شود (تگ `<input>`) و همچنین فرمول‌ها (تگ `<formula>`) در این بخش قرار دارند. در نهایت، مشخصات نویسنده و فوتر صفحه را نیز تعیین کرده‌ام.
-
+در تگ `head` خصوصیاتی که صفحه ما در پشت پرده باید داشته باشد را تعیین میکنیم. مثل اینکه مجموعه کاراکترهای از چه استانداردی استفاده میکند و یا اینکه عنوان صفحه در بالای مرورگر باید چه باشد. همچنین در همین قسمت فایل `css` و `javascript` را به فایل `html` وصل میکنیم.
+در قسمت `body` محتوای اصلی صفحه را تعیین میکنیم. یعنی قسمت‌هایی که قرار است داده را وارد کنیم (تگ `input`) و نتایج فرمول‌ها را مشاهده کنیم (تگ `formula`). و در نهایت فوتر صفحه را تعیین کرده‌ایم که در آن مشخصات نویسنده را نوشته‌ام.
+در تگ‌های `input` مطابق خواسته سوال، داده‌ها را وارد میکنیم و سپس در تگ‌های `formula` مطابق با فرمولی که بر اساس `id` ورودی‌ها مشخص کرده‌ایم، نتایج را مشاهده میکنیم.
 ### عملکرد فایل جاوااسکریپت
 در فایل جاوااسکریپت ابتدا توابع موردنیاز برای محاسبه فرمول‌ها و متغیرهای لازم را تعریف کرده‌ام.
+```javascript
+    constructor() {
+        this.inputs = {};
+        this.formulaElements = document.querySelectorAll('formula');
+        this.initInputs();
+        this.initFormulas();
+        this.setupEventListeners();
+    }
 
-سپس، مقدار اولیه ورودی‌ها را با استفاده از تابع `initInputs` مقداردهی کرده‌ام.  
-برای اجرای محاسبات هنگام تغییر ورودی‌ها، از `eventListener` استفاده کرده‌ام.
+    initInputs() {
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            this.inputs[input.id] = 0;
+            input.addEventListener('input', () => this.updateInput(input));
+        });
+    }
+```
+در تابع `constructor` متغیرهای موردنیاز و توابعی که برای محاسبه فرمول‌ها موردنیاز است را تعریف میکنیم و یا صدا میزنیم. سپس در تابع `initInputs` به ازای هر ورودی مقدار اولیه آن را به 0 مقداردهی میکنیم و بر روی آن یک   `eventListener` صدا میکنیم که در زمان تغییر ورودی‌ها فرمول‌ها با استفاده از تابع `updateInput` دوباره محاسبه شوند.
+```javascript
+    updateInput(input) {
+        this.inputs[input.id] = parseFloat(input.value) || 0;
+        this.updateAllFormulas();
+    }
+```
+در تابع `updateInput` مقدار متناظر با `id` هر ورودی را با مقدار متناظر ورودی در صورت عددبودن ست میکنیم و در غیر این صورت به صفر مقداردهی میکنیم و سپس به سراغ محاسبه کردن همه فرمول‌ها میرویم.
+```javascript
+    initFormulas() {
+        this.formulaElements.forEach(formula => {
+            formula.setAttribute('readonly', 'true');
+            this.evaluateFormula(formula);
+        });
+    }
+```
+در تابع `iniFormulas` هر فرمول را `readonly` میکنیم و سپس با استفاده از تابع `evaluateFormula` به سراغ محاسبه آن میرویم.
+```javascript
+    evaluateFormula(formula) {
+        const expression = formula.getAttribute('evaluator');
+        try {
+            const result = this.calculateExpression(expression);
+            formula.textContent = result;
+        } catch (e) {
+            formula.textContent = 'Invalid Formula';
+        }
+    }
+```
+در این تابع با استفاده از ویژگی `evaluator` که در آن فرمول متناظر با هر تگ `formula` را نوشته‌ایم را ذخیره میکنیم و سپس به سراغ محاسبه فرمول با استفاده از تابع `calculateExpression` میرویم.
 
-در تابع `updateInput`، مقدار متناظر هر ورودی را بررسی کرده و در صورت عددی بودن مقداردهی انجام می‌شود. سپس، تمام فرمول‌ها مجدداً محاسبه می‌شوند.
 
-با استفاده از تابع `evaluateFormula`، مقدار فرمول‌ها را محاسبه و نمایش می‌دهم.
-
-در تابع `calculateExpression`، از ویژگی `evaluator` برای محاسبه فرمول‌ها استفاده کرده و مقادیر ورودی را جایگذاری می‌کنم تا محاسبه انجام شود.
 
 ### استایل‌دهی با `CSS`
 برای استایل‌دهی از `CSS` استفاده کرده‌ام. تمام استایل‌های موردنیاز در این فایل نوشته شده‌اند. با استفاده از ویژگی‌هایی مانند `text-align: center`، محتوای صفحه را تنظیم کرده‌ام.
