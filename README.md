@@ -2,6 +2,39 @@
 
 ### ساختار HTML
 ابتدا یک فایل HTML ساختم و به توضیح بخش‌های مختلف آن می‌پردازم.
+```html
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="main-content">
+        <div class="container">
+            <h1>Formula Calculator</h1>
+            <input type="number" id="First" placeholder="First Number">
+            <input type="number" id="Second" placeholder="Second Number">
+            <input type="number" id="Third" placeholder="Third Number">
+            <formula evaluator="First*Second+Third"></formula>
+            <formula evaluator="(First-Third)*Second"></formula>
+            <formula evaluator="First+Second*Third"></formula>
+        </div>
+    </div>
+
+    <footer class="student-footer">
+        <div class="footer-content">
+            <span class="student-name">Amirhossein Mohammadpour</span>
+            <span class="student-id">402170024</span>
+        </div>
+    </footer>
+</body>
+</html>
+
+
 
 در تگ `<head>` مشخصات صفحه مانند عنوان، استانداردهای مورد استفاده، و فایل‌های `CSS` اضافه شده‌اند.
 
