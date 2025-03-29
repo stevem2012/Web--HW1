@@ -121,7 +121,7 @@ body {
   justify-content: space-between;
 }
 ```
-همچنین ستونی قرارگرفتن فیلدها در این قسمت با استقاده از `  ;display: flex; flex-direction: column`:
+همچنین ستونی قرارگرفتن فیلدها در این قسمت با استفاده از `  ;display: flex; flex-direction: column`:
 ```css
 .container {
   display: flex;
