@@ -1,0 +1,100 @@
+h1 {
+  text-align: center;
+  color: #da70d6;
+  margin-bottom: 20px;
+}
+
+body {
+  background-image: url('sample.png');
+  background-size: cover;      
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  background-color: rgba(85, 85, 85, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+input {
+  width: 80%;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 2px solid #007bff;
+  color: #333;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+formula {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  background-color: #e9f7ef;
+  border: 2px solid #28a745;
+  color: #155724;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.student-footer {
+  width: 100%;
+  background-color: rgba(85, 85, 85, 0.95);
+  color: #da70d6;
+  text-align: center;
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9em; 
+  height: 10%; 
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.student-name, .student-id {
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .container {
+      width: 95%;
+      padding: 15px;
+  }
+  
+  input, formula {
+      width: 90%;
+  }
+  
+  .footer-content {
+      flex-direction: column;
+      gap: 10px;
+  }
+}
